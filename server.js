@@ -1,8 +1,8 @@
 const express = require("express");
+const app = express();
 // Import the mongoose module
 const mongoose = require("mongoose");
 const cors = require("cors");
-const app = express();
 const Event = require("./Models/event");
 const { response } = require("express");
 const PORT = 3001;
@@ -23,10 +23,12 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/event/:rso", (req, res) => {
+  console.log("requesting rso events...");
   const rso = req.params.rso;
+  console.log(rso);
 
   Event.find({ rso: rso })
-    .then((result) => response.send({ data: result }))
+    .then((result) => res.send({ data: result }))
     .catch((error) => console.log(error));
 });
 
