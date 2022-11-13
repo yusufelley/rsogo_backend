@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const Event = require("./Models/event");
+const { response } = require("express");
 const PORT = 3001;
 app.use(cors());
 app.use(express.json());
@@ -21,8 +22,16 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/event/:rso", (req, res) => {
+  const rso = req.params.rso;
+
+  Event.find({ rso: rso })
+    .then((result) => response.send({ data: result }))
+    .catch((error) => console.log(error));
+});
+
 app.post("/CreateEvent", (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   const event = new Event(req.body);
 
   event
