@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 // Subject To Change Test Schema
 const eventSchema = new Schema(
   {
+    rso: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
